@@ -6,7 +6,7 @@
     <head>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
-        <link href='/skeleton.css' rel='stylesheet' type='text/css'>
+        <link href='{{ site.baseurl }}/skeleton.css' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -55,7 +55,7 @@
             <ul>
                 {% for post in site.posts %}
                     <li>
-                        <a href="{{ post.permalink }}">{{ post.name }}</a>
+                        <a href="{{ site.baseurl }}{{ post.permalink }}">{{ post.name }}</a>
                     </li>
                 {% endfor %}
             </ul>
