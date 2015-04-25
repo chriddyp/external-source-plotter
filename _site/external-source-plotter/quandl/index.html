@@ -1,0 +1,202 @@
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link href='/skeleton.css' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+
+        <div class="row">
+            <div class="three columns">
+                <div style="margin-top: 20px;">
+
+                    <label for="data-source">Data Source</label>
+                    This URL was taken directly from Quandl's <a href="https://www.quandl.com/data/NVCA/VENTURE_3_10-Venture-Capital-Investments-By-Industry">Export to CSV link</a>.
+                    <input id="data-source" class="u-full-width" type="text" value="https://www.quandl.com/api/v1/datasets/NVCA/VENTURE_3_10.csv" placeholder="url to raw data">
+                    <label>JSON Graph Description</label>
+                    <code>data</code>
+                    <textarea style="height: 120px;" class="u-full-width" id="graph-json-data">
+    [{
+        "xsrc": "Year",
+        "ysrc": "Biotechnology",
+        "name": "Biotechnology"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Business Products and Services",
+        "visible": "legendonly",
+        "name": "Business Products and Services"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Computers and Peripherals",
+        "visible": "legendonly",
+        "name": "Computers and Peripherals"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Consumer Products and Services",
+        "visible": "legendonly",
+        "name": "Consumer Products and Services"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Electronics/Instrumentation",
+        "visible": "legendonly",
+        "name": "Electronics/Instrumentation"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Financial Services",
+        "visible": "legendonly",
+        "name": "Financial Services"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Healthcare Services",
+        "visible": "legendonly",
+        "name": "Healthcare Services"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Industrial/Energy",
+        "visible": "legendonly",
+        "name": "Industrial/Energy"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "IT Services",
+        "name": "IT Services"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Media and Entertainment",
+        "name": "Media and Entertainment"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Medical Devices and Equipment",
+        "visible": "legendonly",
+        "name": "Medical Devices and Equipment"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Networking and Equipment",
+        "visible": "legendonly",
+        "name": "Networking and Equipment"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Other",
+        "visible": "legendonly",
+        "name": "Other"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Retailing/Distribution",
+        "visible": "legendonly",
+        "name": "Retailing/Distribution"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Semiconductors",
+        "visible": "legendonly",
+        "name": "Semiconductors"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Software",
+        "name": "Software"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Telecommunications",
+        "visible": "legendonly",
+        "name": "Telecommunications"
+    },
+    {
+        "xsrc": "Year",
+        "ysrc": "Unknown",
+        "visible": "legendonly",
+        "name": "Unknown"
+    }
+]
+                    </textarea>
+                    <div id="data-error"></div>
+                    <code>layout</code>
+                    <textarea style="height: 120px;" class="u-full-width" id="graph-json-layout">
+{
+    "title": "Venture Capital Investments by Sector",
+    "yaxis": {
+        "title": "Capital Investment (Millions)",
+        "tickprefix": "$"
+    }
+}
+                    </textarea>
+                    <div id="layout-error"></div>
+
+                    Generated graph URL
+                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://stage.plot.ly/proxy-plot"></a></pre>
+                    <a id="update" class="button">
+                        Update graph
+                    </a>
+                </div>
+            </div>
+
+            <div class="nine columns">
+            <iframe style="width: 100%; height: 750px; border: none;"
+                    src="https://stage.plot.ly/proxy-plot">
+            </iframe>
+
+        </div>
+
+    </body>
+
+    <footer>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript">
+
+            function buildUrl(){
+                try {
+                    var data = JSON.stringify(JSON.parse($('#graph-json-data').val()));
+                } catch(e) {
+                    $('#data-error').text('Yikes, invalid JSON!');
+                    throw(e);
+                }
+                try {
+                    var layout = JSON.stringify(JSON.parse($('#graph-json-layout').val()));
+                } catch(e) {
+                    $('#layout-error').text('Yikes, invalid JSON!');
+                    throw(e);
+                }
+
+                var source = $('#data-source').val();
+
+                var url = ''
+                url += 'https://stage.plot.ly/proxy-plot';
+                url += '?source='+encodeURIComponent(source);
+                url += '&data='+encodeURIComponent(data);
+                url += '&layout='+encodeURIComponent(layout);
+
+                return url;
+            }
+
+            function updateUrl(){
+                console.log('updating url');
+                var url = buildUrl();
+                $('#graph-url').attr('href', url);
+                $('#graph-url').text(decodeURIComponent(url));
+                $('iframe').attr('src', url);
+            }
+
+            $('#graph-json-data').change(updateUrl);
+            $('#graph-json-layout').change(updateUrl);
+            $('#data-source').change(updateUrl);
+            $('#update').click(updateUrl);
+            updateUrl();
+
+        </script>
+    </footer>
+
+</html>

@@ -1,7 +1,3 @@
----
-
----
-
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
@@ -53,11 +49,23 @@
             <div>
             <h4>Examples</h4>
             <ul>
-                {% for post in site.posts %}
+                
                     <li>
-                        <a href="{{ post.permalink }}">{{ post.name }}</a>
+                        <a href="external-source-plotter/quandl">Import from Quandl</a>
                     </li>
-                {% endfor %}
+                
+                    <li>
+                        <a href="external-source-plotter/google-drive">Import from Google Drive</a>
+                    </li>
+                
+                    <li>
+                        <a href="external-source-plotter/github-gist">Import from Github Gist</a>
+                    </li>
+                
+                    <li>
+                        <a href="external-source-plotter/dropbox">Import from Dropbox</a>
+                    </li>
+                
             </ul>
 
             </div>
