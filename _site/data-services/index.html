@@ -12,38 +12,14 @@
                 <div style="margin-top: 20px;">
 
                     <label for="data-source">Data Source</label>
-                    To import Google Spreadsheets, shorten your URL to contain just the ID after <code>/spreadsheets</code> and add <code>/export?format=csv</code> to the end.
-                    Here is the Google Drive source of this data: <a style="word-wrap: break-word;" href="https://docs.google.com/a/plot.ly/spreadsheets/d/14aROwymJ_OFFvkdK9EzCVtGEu_9mSHyAt8z-gAcT6HE">https://docs.google.com/a/plot.ly/spreadsheets/d/14aROwymJ_OFFvkdK9EzCVtGEu_9mSHyAt8z-gAcT6HE</a>
-                    <input id="data-source" class="u-full-width" type="text" value="https://docs.google.com/a/plot.ly/spreadsheets/d/14aROwymJ_OFFvkdK9EzCVtGEu_9mSHyAt8z-gAcT6HE/export?format=csv" placeholder="url to raw data">
+                    <input id="data-source" class="u-full-width" type="text" value="https://www.quandl.com/api/v1/datasets/NVCA/VENTURE_3_10.csv" placeholder="url to raw data">
                     <label>JSON Graph Description</label>
                     <code>data</code>
                     <textarea style="height: 120px;" class="u-full-width" id="graph-json-data">
 [
     {
-        "xsrc": "X Data 1",
-        "ysrc": "Y Data 1",
-        "mode": "markers",
-        "marker": {
-            "opacity": 0.7,
-            "line": {
-                "color": "rgb(250, 250, 250)",
-                "width": 0.5
-            }
-        },
-        "name": "Oxygen"
-    },
-    {
-        "xsrc": "X Data 2",
-        "ysrc": "Y Data 2",
-        "mode": "markers",
-        "marker": {
-            "opacity": 0.7,
-            "line": {
-                "color": "rgb(250, 250, 250)",
-                "width": 0.5
-            }
-        },
-        "name": "Calcium"
+        "xsrc": "Date",
+        "ysrc": "Open"
     }
 ]
                     </textarea>
@@ -51,12 +27,16 @@
                     <code>layout</code>
                     <textarea style="height: 120px;" class="u-full-width" id="graph-json-layout">
 {
-    "title": "Import directly from Google Drive"
+    "title": "AAON",
+    "yaxis": {
+        "title": "Capital Investment (Millions)",
+        "tickprefix": "$"
+    }
 }
                     </textarea>
                     <div id="layout-error"></div>
 
-                    Share this graph
+                    Generated graph URL
                     <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://stage.plot.ly/proxy/plot"></a></pre>
                     <a id="update" class="button">
                         Update graph
@@ -65,10 +45,10 @@
             </div>
 
             <div class="nine columns">
-            <iframe style="width: 100%; height: 750px; border: none;"
-                    src="https://stage.plot.ly/proxy/plot">
-            </iframe>
-
+                <iframe style="width: 100%; height: 750px; border: none;"
+                        src="https://stage.plot.ly/proxy/plot">
+                </iframe>
+            </div>
         </div>
 
     </body>
@@ -84,6 +64,7 @@
                     $('#data-error').text('Yikes, invalid JSON!');
                     throw(e);
                 }
+
                 try {
                     var layout = JSON.stringify(JSON.parse($('#graph-json-layout').val()));
                 } catch(e) {

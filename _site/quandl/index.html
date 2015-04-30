@@ -2,7 +2,7 @@
     <head>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
-        <link href='/skeleton.css' rel='stylesheet' type='text/css'>
+        <link href='/external-source-plotter/skeleton.css' rel='stylesheet' type='text/css'>
     </head>
 
     <body>
@@ -137,7 +137,7 @@
                     <div id="layout-error"></div>
 
                     Generated graph URL
-                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://stage.plot.ly/proxy-plot"></a></pre>
+                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://stage.plot.ly/proxy/plot"></a></pre>
                     <a id="update" class="button">
                         Update graph
                     </a>
@@ -146,7 +146,7 @@
 
             <div class="nine columns">
             <iframe style="width: 100%; height: 750px; border: none;"
-                    src="https://stage.plot.ly/proxy-plot">
+                    src="https://stage.plot.ly/proxy/plot">
             </iframe>
 
         </div>
@@ -174,7 +174,7 @@
                 var source = $('#data-source').val();
 
                 var url = ''
-                url += 'https://stage.plot.ly/proxy-plot';
+                url += 'https://stage.plot.ly/proxy/plot';
                 url += '?source='+encodeURIComponent(source);
                 url += '&data='+encodeURIComponent(data);
                 url += '&layout='+encodeURIComponent(layout);
