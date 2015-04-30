@@ -30,7 +30,11 @@ name: Graph Yahoo Finance Tickers served from a flask app
     {
         "xsrc": "Date",
         "ysrc": "Open"
-    }
+    },
+    {
+        "xsrc": "Date",
+        "ysrc": "Close"
+    },
 ]
                     </textarea>
                     <div id="data-error"></div>
@@ -38,7 +42,7 @@ name: Graph Yahoo Finance Tickers served from a flask app
                     <textarea style="height: 120px;" class="u-full-width" id="graph-json-layout">
 {
     "yaxis": {
-        "title": "Capital Investment (Millions)",
+        "title": "Price",
         "tickprefix": "$"
     }
 }
