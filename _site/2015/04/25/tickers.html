@@ -11,8 +11,12 @@
             <div class="three columns">
                 <div style="margin-top: 20px;">
 
-                    <label for="data-source">Data Source</label>
+                    <label for="data-source">Ticker</label>
+                    <input id="data-source" class="u-full-width" type="text" value="TFSC" placeholder="TFSC">
+                    <!--
                     <input id="data-source" class="u-full-width" type="text" value="https://www.quandl.com/api/v1/datasets/NVCA/VENTURE_3_10.csv" placeholder="url to raw data">
+                    -->
+
                     <label>JSON Graph Description</label>
                     <code>data</code>
                     <textarea style="height: 120px;" class="u-full-width" id="graph-json-data">
@@ -27,7 +31,6 @@
                     <code>layout</code>
                     <textarea style="height: 120px;" class="u-full-width" id="graph-json-layout">
 {
-    "title": "AAON",
     "yaxis": {
         "title": "Capital Investment (Millions)",
         "tickprefix": "$"
@@ -72,7 +75,7 @@
                     throw(e);
                 }
 
-                var source = $('#data-source').val();
+                var source = 'http://blooming-mountain-2769.herokuapp.com/data/'+$('#data-source').val();
 
                 var url = ''
                 url += 'https://stage.plot.ly/proxy/plot';
