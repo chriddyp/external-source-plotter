@@ -56,7 +56,7 @@
                     <div id="layout-error"></div>
 
                     Share this graph
-                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://stage.plot.ly/proxy/plot"></a></pre>
+                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://plot.ly/proxy/plot"></a></pre>
                     <a id="update" class="button">
                         Update graph
                     </a>
@@ -65,7 +65,7 @@
 
             <div class="nine columns">
             <iframe style="width: 100%; height: 750px; border: none;"
-                    src="https://stage.plot.ly/proxy/plot">
+                    src="https://plot.ly/proxy/plot">
             </iframe>
 
         </div>
@@ -93,8 +93,8 @@
                 var source = $('#data-source').val();
 
                 var url = ''
-                url += 'https://stage.plot.ly/proxy/plot';
-                url += '?source='+encodeURIComponent(source);
+                url += 'https://plot.ly/proxy/plot?proxy_key=cuJlY8R9h9UUzrO2b6iu';
+                url += '&source='+encodeURIComponent(source);
                 url += '&data='+encodeURIComponent(data);
                 url += '&layout='+encodeURIComponent(layout);
 
