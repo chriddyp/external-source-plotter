@@ -1,0 +1,298 @@
+---
+permalink: /sqlite
+name: Connect Plotly to a SQLite Database
+---
+
+
+<html>
+    <head>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link href='/external-source-plotter/skeleton.css' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+
+        <div class="row">
+            <div class="twelve columns">
+                <div style="height: 100px; overflow-y: scroll;">
+                    <table class="dataframe">
+                      <thead>
+                        <tr style="text-align: right;">
+                          <th></th>
+                          <th>index</th>
+                          <th>CreatedDate</th>
+                          <th>ClosedDate</th>
+                          <th>Agency</th>
+                          <th>ComplaintType</th>
+                          <th>Descriptor</th>
+                          <th>City</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>0</th>
+                          <td>1</td>
+                          <td>2014-11-16 23:46:00.000000</td>
+                          <td>2014-11-16 23:46:00.000000</td>
+                          <td>DSNY</td>
+                          <td>Derelict Vehicles</td>
+                          <td>14 Derelict Vehicles</td>
+                          <td>Jamaica</td>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <td>2</td>
+                          <td>2014-11-16 02:24:35.000000</td>
+                          <td>2014-11-16 02:24:35.000000</td>
+                          <td>DOB</td>
+                          <td>Building/Use</td>
+                          <td>Illegal Conversion Of Residential Building/Space</td>
+                          <td>BRONX</td>
+                        </tr>
+                        <tr>
+                          <th>2</th>
+                          <td>3</td>
+                          <td>2014-11-16 02:17:12.000000</td>
+                          <td>2014-11-16 02:50:48.000000</td>
+                          <td>NYPD</td>
+                          <td>Illegal Parking</td>
+                          <td>Blocked Sidewalk</td>
+                          <td>BROOKLYN</td>
+                        </tr>
+                        <tr>
+                          <th>3</th>
+                          <td>4</td>
+                          <td>2014-11-16 02:15:13.000000</td>
+                          <td>None</td>
+                          <td>NYPD</td>
+                          <td>Noise - Street/Sidewalk</td>
+                          <td>Loud Music/Party</td>
+                          <td>NEW YORK</td>
+                        </tr>
+                        <tr>
+                          <th>4</th>
+                          <td>5</td>
+                          <td>2014-11-16 02:14:01.000000</td>
+                          <td>None</td>
+                          <td>NYPD</td>
+                          <td>Illegal Parking</td>
+                          <td>Commercial Overnight Parking</td>
+                          <td>STATEN ISLAND</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="twelve columns">
+                <input id="query-string" style="display: inline-block; width: 80%"
+                        type="text"
+                        value="SELECT ComplaintType, COUNT(*) as `num_complaints`, Agency FROM data GROUP BY `ComplaintType` ORDER BY -num_complaints"
+                        placeholder="SELECT ComplaintType, COUNT(*) as `num_complaints`, Agency FROM data GROUP BY `ComplaintType` ORDER BY -num_complaints">
+                <a id="update" class="button" style="display: inline-block;">
+                    Query Data
+                </a>
+                <div id="query-error" style="font-size: 0.8em;">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <h5>Response</h5>
+        </div>
+
+        <div class="row">
+            <div class="four columns">
+
+                <div id="preview" style="height: 200px; overflow-y: scroll;">
+                    <table class="dataframe">
+                      <thead>
+                        <tr style="text-align: right;">
+                          <th></th>
+                          <th>ComplaintType</th>
+                          <th>num_complaints</th>
+                          <th>Agency</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th>0</th>
+                          <td>HEAT/HOT WATER</td>
+                          <td>32202</td>
+                          <td>HPD</td>
+                        </tr>
+                        <tr>
+                          <th>1</th>
+                          <td>Street Light Condition</td>
+                          <td>7558</td>
+                          <td>DOT</td>
+                        </tr>
+                        <tr>
+                          <th>2</th>
+                          <td>Blocked Driveway</td>
+                          <td>6997</td>
+                          <td>NYPD</td>
+                        </tr>
+                        <tr>
+                          <th>3</th>
+                          <td>UNSANITARY CONDITION</td>
+                          <td>6174</td>
+                          <td>HPD</td>
+                        </tr>
+                        <tr>
+                          <th>4</th>
+                          <td>PAINT/PLASTER</td>
+                          <td>5388</td>
+                          <td>HPD</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+
+                <div style="margin-top: 20px;">
+                    <code>data</code>
+                    <textarea style="height: 120px;" class="u-full-width" id="graph-json-data">
+[
+  {
+    "xsrc": "ComplaintType",
+    "ysrc": "num_complaints",
+    "name": "ComplaintType",
+    "type": "bar"
+  },
+  {
+    "xsrc": "Agency",
+    "ysrc": "num_complaints",
+    "name": "Agency",
+    "type": "bar"
+  }
+]
+                    </textarea>
+                    <div id="data-error"></div>
+                    <code>layout</code>
+                    <textarea style="height: 120px;" class="u-full-width" id="graph-json-layout">
+{
+  "yaxis": {
+    "title": "num_complaints"
+  }
+}
+                    </textarea>
+                    <div id="layout-error"></div>
+
+                    Share this graph
+                    <pre style="word-wrap: break-word; overflow-y: scroll; height: 100px;" class="u-full-width"><a id="graph-url" target="_blank" href="https://plot.ly/proxy/plot"></a></pre>
+                </div>
+            </div>
+
+            <div class="eight columns">
+                <iframe style="width: 100%; height: 500px; border: none;"
+                        src="">
+                </iframe>
+            </div>
+        </div>
+
+    </body>
+
+    <footer>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript">
+
+            var domain = 'https://vast-anchorage-2013.herokuapp.com';
+
+            function getQueryString(){
+                return encodeURIComponent($('#query-string').val());
+            }
+
+            function guessPlot(callback) {
+                var queryString = getQueryString();
+                $.getJSON(domain + '/json/'+queryString, function(info){
+                    console.log(info);
+                    $('#query-error').text('');
+                    var data = [];
+                    for(var i in info.types.object) {
+                        data.push({
+                            'xsrc': info.types.object[i],
+                            'ysrc': info.types.int64[0],
+                            'name': info.types.object[i],
+                            'type': 'bar'
+                        });
+                    }
+                    var layout = {
+                        'yaxis': {
+                            'title': info.types.int64[0]
+                        }
+                    };
+
+                    $('#graph-json-data').html(JSON.stringify(data, null, 2));
+                    $('#graph-json-layout').html(JSON.stringify(layout, null, 2));
+
+                    callback();
+                }).error(function(jqXHR, textStatus, errorThrown){
+                    // debug;
+                    $('#query-error').text('Yikes, invalid query!');
+                });
+
+                $.get(domain + '/html/'+queryString, function(htmlPreview){
+                    $('#preview').html(htmlPreview);
+                }).error(function(j, t, e){
+                    $('#preview').html('');
+                });
+            }
+
+            function buildUrl(){
+                try {
+                    var data = JSON.stringify(JSON.parse($('#graph-json-data').val()));
+                } catch(e) {
+                    $('#data-error').text('Yikes, invalid JSON!');
+                    throw(e);
+                }
+
+                try {
+                    var layout = JSON.stringify(JSON.parse($('#graph-json-layout').val()));
+                } catch(e) {
+                    $('#layout-error').text('Yikes, invalid JSON!');
+                    throw(e);
+                }
+
+                var source = domain + '/csv/' + getQueryString();
+                console.log(source);
+                var url = ''
+                url += 'https://plot.ly/proxy/plot?proxy_key=cuJlY8R9h9UUzrO2b6iu';
+                url += '&source='+encodeURIComponent(source);
+                url += '&data='+encodeURIComponent(data);
+                url += '&layout='+encodeURIComponent(layout);
+
+                return url;
+            }
+
+            function updateUrl(){
+                console.log('updating url');
+                var url = buildUrl();
+                $('#graph-url').attr('href', url);
+                $('#graph-url').text(decodeURIComponent(url));
+                $('iframe').attr('src', url);
+            }
+
+            $('#graph-json-data').change(updateUrl);
+            $('#graph-json-layout').change(updateUrl);
+            /*
+            $('#query-string').change(function(){
+                guessPlot(updateUrl);
+            });
+            */
+
+            $('#update').click(function(){
+                guessPlot(updateUrl);
+            });
+            updateUrl();
+
+        </script>
+    </footer>
+
+</html>
